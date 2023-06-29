@@ -1,4 +1,6 @@
 <?php
+ini_set('session.gc_maxlifetime', 900); // 900 segundos = 15 minutos
+session_set_cookie_params(900);
 session_start();
 require_once __DIR__ . '/../../config.php';
 
@@ -8,6 +10,15 @@ $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
 }
+if (isset($_SESSION['last_activity']) && time() - $_SESSION['last_activity'] > 900) {
+    // Si ha pasado más de 15 minutos, destruir la sesión y redirigir al inicio de sesión
+    session_unset();
+    session_destroy();
+    header('Location: /limpiezaCL/limpiezaBDCL/app/vistas/login.php');
+    exit();
+}
+$_SESSION['last_activity'] = time();
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
@@ -22,7 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Las credenciales son válidas, el usuario puede iniciar sesión
         $_SESSION['usuario'] = $username;
         $_SESSION['id_usuario'] = $idUsuario; // Por ejemplo, el ID del usuario obtenido de la base de datos
-    
+        // Reiniciar el tiempo de actividad de la sesión
+        $_SESSION['last_activity'] = time();
         header('Location: /limpiezaCL/limpiezaBDCL/app/vistas/menu.php');
         exit();
     } else {
@@ -34,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,8 +55,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="/../limpiezaCL/limpiezaBDCL/app/recursos/css/bootstrap.css">
     <!-- Enlace al archivo CSS global -->
     <link rel="stylesheet" href="/../limpiezaCL/limpiezaBDCL/app/recursos/css/global.css">
-    
+
 </head>
+
 <body class="text-center">
     <main class="form-signin">
         <form action="/../limpiezaCL/limpiezaBDCL/app/vistas/login.php" method="POST">
@@ -63,4 +77,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Enlace al archivo JavaScript de Bootstrap (opcional) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

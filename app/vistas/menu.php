@@ -58,6 +58,24 @@ if (!isset($_SESSION['usuario'])) {
             <button class="btn btn-primary mb-2" type="button" onclick="window.location.href = '/limpiezaCL/limpiezaBDCL/app/vistas/reestructura.php'">Reestructura</button>
         </div>
     </div>
+    <script>
+// Función para redirigir al inicio de sesión después de 15 minutos de inactividad
+function redirigirInicioSesion() {
+    window.location.href = '/limpiezaCL/limpiezaBDCL/app/vistas/login.php';
+}
 
+// Reiniciar el contador de inactividad al detectar eventos de interacción del usuario
+function reiniciarContadorInactividad() {
+    clearTimeout(timer);
+    timer = setTimeout(redirigirInicioSesion, 900000); // 900000 milisegundos = 15 minutos
+}
+
+// Establecer eventos de interacción del usuario para reiniciar el contador de inactividad
+document.addEventListener('mousemove', reiniciarContadorInactividad);
+document.addEventListener('keypress', reiniciarContadorInactividad);
+
+// Iniciar el contador de inactividad al cargar la página
+var timer = setTimeout(redirigirInicioSesion, 900000); // 900000 milisegundos = 15 minutos
+</script>
 </body>
 </html>

@@ -1,18 +1,53 @@
+<?php
+session_start();
+require_once __DIR__ . '/../../config.php';
+
+require_once __DIR__ . '/../modelo/DAO/UsuarioDAO.php';
+$conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+
+if ($conn->connect_error) {
+    die("Error de conexión: " . $conn->connect_error);
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // Crear una instancia del DAO y pasar la conexión a la base de datos
+    $usuarioDAO = new UsuarioDAO($conn);
+
+
+    // Validar las credenciales utilizando el DAO
+    if ($usuarioDAO->validarCredenciales($username, $password)) {
+        // Las credenciales son válidas, el usuario puede iniciar sesión
+        $_SESSION['usuario'] = $username;
+        $_SESSION['id_usuario'] = $idUsuario; // Por ejemplo, el ID del usuario obtenido de la base de datos
+    
+        header('Location: /limpiezaCL/limpiezaBDCL/app/vistas/menu.php');
+        exit();
+    } else {
+        // Las credenciales son inválidas, mostrar un mensaje de error o realizar acciones adicionales
+        echo "Credenciales inválidas. Por favor, verifica tus datos e intenta nuevamente.";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar sesión</title>
-    <!-- Enlace al archivo CSS global -->
-    <link rel="stylesheet" href="/app/recursos/css/global.css">
     <!-- Enlaces a los archivos CSS de Bootstrap -->
-    <link rel="stylesheet" href="/app/recursos/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/../limpiezaCL/limpiezaBDCL/app/recursos/css/bootstrap.css">
+    <!-- Enlace al archivo CSS global -->
+    <link rel="stylesheet" href="/../limpiezaCL/limpiezaBDCL/app/recursos/css/global.css">
+    
 </head>
 <body class="text-center">
     <main class="form-signin">
-        <form action="/app/controlador/login.php" method="POST">
-            <img class="mb-4" src="/app/recursos/images/logo.png" alt="Logo" width="72" height="57">
+        <form action="/../limpiezaCL/limpiezaBDCL/app/vistas/login.php" method="POST">
+            <img class="mb-4 logo" src="/../limpiezaCL/limpiezaBDCL/app/recursos/images/naranja1.png" alt="Logo" width="72" height="57">
             <h1 class="h3 mb-3 fw-normal">Iniciar sesión</h1>
             <div class="form-floating">
                 <input type="text" class="form-control" id="username" name="username" placeholder="Nombre de usuario" required>

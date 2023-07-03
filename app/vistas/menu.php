@@ -56,6 +56,7 @@ if (!isset($_SESSION['usuario'])) {
             <button class="btn btn-primary mb-2" type="button" onclick="window.location.href = '/limpiezaCL/limpiezaBDCL/app/vistas/faltantes.php'">Faltantes</button>
             <button class="btn btn-primary mb-2" type="button" onclick="window.location.href = '/limpiezaCL/limpiezaBDCL/app/vistas/descontinuados.php'">Baja Productos</button>
             <button class="btn btn-primary mb-2" type="button" onclick="window.location.href = '/limpiezaCL/limpiezaBDCL/app/vistas/reestructura.php'">Reestructura</button>
+            <button class="btn btn-primary mb-2" type="button" onclick="window.location.href = '/limpiezaCL/limpiezaBDCL/app/vistas/conteoInventarios.php'">Conteo Fisico</button>
         </div>
     </div>
     <script>

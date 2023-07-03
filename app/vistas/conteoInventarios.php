@@ -1,7 +1,7 @@
 <?php
-$currentPage = 'productos';
-ini_set('session.gc_maxlifetime', 900); // 900 segundos = 15 minutos
-session_set_cookie_params(900);
+$currentPage = 'conteo';
+ini_set('session.gc_maxlifetime', 60); // 900 segundos = 15 minutos
+session_set_cookie_params(60);
 session_start();
 require_once __DIR__ . '/../../config.php';
 

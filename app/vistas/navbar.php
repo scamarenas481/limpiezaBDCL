@@ -1,10 +1,10 @@
-<nav class="navbar navbar-expand-lg fixed-top " style="background-color: #00008B  ;" data-bs-theme="blue">
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark" style="background-color: #00008B  ;" data-bs-theme="dark" >
     <div class="container-fluid">
         <a class="navbar-brand" href="/limpiezaCL/limpiezaBDCL/app/vistas/menu.php">Inicio</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="collapse navbar-collapse" id="navbarNav" >
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link <?php if ($currentPage === 'productos') echo 'active'; ?>" href="/limpiezaCL/limpiezaBDCL/app/vistas/productos.php">Inventario Inicial</a>
@@ -20,6 +20,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?php if ($currentPage === 'reestructura') echo 'active'; ?>" href="/limpiezaCL/limpiezaBDCL/app/vistas/reestructura.php">Reestructura</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <?php if ($currentPage === 'conteo') echo 'active'; ?>" href="/limpiezaCL/limpiezaBDCL/app/vistas/conteoInventarios.php">Conteo Físico</a>
                 </li>
             </ul>
         </div>
@@ -51,7 +54,7 @@
     .navbar-brand:focus {
         color: white;
     }
-
+  
     .navbar {
         color: #FFFFFF;
     }

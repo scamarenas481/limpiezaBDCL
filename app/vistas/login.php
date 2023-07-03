@@ -27,9 +27,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Crear una instancia del DAO y pasar la conexión a la base de datos
     $usuarioDAO = new UsuarioDAO($conn);
 
+    // Obtener el hash de la contraseña almacenada en la base de datos
+    $hashedPassword = $usuarioDAO->getHashedPassword($username);
 
-    // Validar las credenciales utilizando el DAO
-    if ($usuarioDAO->validarCredenciales($username, $password)) {
+    // Verificar si la contraseña ingresada coincide con el hash almacenado
+    if (password_verify($password, $hashedPassword)) {
         // Las credenciales son válidas, el usuario puede iniciar sesión
         $_SESSION['usuario'] = $username;
         $_SESSION['id_usuario'] = $idUsuario; // Por ejemplo, el ID del usuario obtenido de la base de datos

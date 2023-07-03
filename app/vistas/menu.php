@@ -67,7 +67,7 @@ function redirigirInicioSesion() {
 // Reiniciar el contador de inactividad al detectar eventos de interacción del usuario
 function reiniciarContadorInactividad() {
     clearTimeout(timer);
-    timer = setTimeout(redirigirInicioSesion, 900000); // 900000 milisegundos = 15 minutos
+    timer = setTimeout(redirigirInicioSesion, 60000); // 900000 milisegundos = 15 minutos
 }
 
 // Establecer eventos de interacción del usuario para reiniciar el contador de inactividad
@@ -75,7 +75,7 @@ document.addEventListener('mousemove', reiniciarContadorInactividad);
 document.addEventListener('keypress', reiniciarContadorInactividad);
 
 // Iniciar el contador de inactividad al cargar la página
-var timer = setTimeout(redirigirInicioSesion, 900000); // 900000 milisegundos = 15 minutos
+var timer = setTimeout(redirigirInicioSesion, 60000); // 900000 milisegundos = 15 minutos
 </script>
 </body>
 </html>

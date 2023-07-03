@@ -8,7 +8,7 @@ class UsuarioController {
     public function __construct() {
         $this->usuarioDAO = new UsuarioDAO();
     }
-
+  
     public function validarCredenciales($usuario, $contrasena) {
         try {
             $usuarioDTO = $this->usuarioDAO->obtenerUsuarioPorNombre($usuario);

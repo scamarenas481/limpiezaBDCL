@@ -49,35 +49,28 @@ $_SESSION['last_activity'] = time();
                         <th>Línea</th>
                         <th>Existencias</th>
                         <th>Control de Almacén</th>
-                        <th>Clave Alterna</th>
+                        <th>Conteo</th>
+                        <th>Contado</th>
                         <th>Unidad de Entrada</th>
                         <th>Factor entre Unidades</th>
                         <th>Unidad de Salida</th>
+                        <th>Clave Alterna</th>
                         <th>Código de Proveedor</th>
-                        <th>Marca ID</th>
-                        <th>Fabricante ID</th>
-                        <th>Número de Fabricante</th>
-                        <th>Clave de Unidad</th>
-                        <th>Clave SAT</th>
                         <th>Estatus</th>
-                        <th>Conteo</th>
-                        <th>Contado</th>
-                        <th>Existe</th>
-                        <th>Para Revisión</th>
-                        <th>Para Reestructura</th>
                         <th>Fecha Movimiento</th>
+                        <th>Usuario</th>
+                        <th>Existe</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     // Consulta para obtener los datos de la tabla productos
-                    $consulta = $consulta = "SELECT p.claveId, p.descripcion, p.linea, p.unidadEntrada, p.unidadSalida,
-                    p.claveUnidad, p.codigoProveedor, p.claveAlterna, p.numeroFabricante, p.controlAlmacen,
-                    p.estatus, p.existencias, p.factorUnidades, p.conteo, p.contado, p.existe,p.claveSat,
-                    p.paraRevision, p.paraReestructura, p.fechaMov, f.nombreFabricante AS fabricante, m.nombreMarca AS marca
-                    FROM productos p
-                    INNER JOIN fabricante f ON p.fabricanteId = f.id
-                    INNER JOIN marcas m ON p.marcaId = m.id";
+                    $consulta = "SELECT p.claveId, p.descripcion, p.linea, p.unidadEntrada, p.unidadSalida,\n"
+                        . "p.codigoProveedor, p.claveAlterna, p.controlAlmacen,\n"
+                        . "p.estatus, p.existencias, p.factorUnidades, p.conteo, p.contado, p.existe,\n"
+                        . "p.fechaMov, u.Usuario AS usuario\n"
+                        . "FROM productos p\n"
+                        . "INNER JOIN usuarios u ON p.IdUsuario = u.id;";
 
                     // Ejecuta la consulta
                     $resultado = $conn->query($consulta);
@@ -86,29 +79,23 @@ $_SESSION['last_activity'] = time();
                         // Recorre los resultados y muestra los datos en la tabla
                         while ($row = $resultado->fetch_assoc()) {
                             echo "<tr>
-                                <td>" . $row['claveId'] . "</td>
-                                <td>" . $row['descripcion'] . "</td>
-                                <td>" . $row['linea'] . "</td>
-                                <td>" . $row['existencias'] . "</td>
-                                <td>" . $row['controlAlmacen'] . "</td>
-                                <td>" . $row['claveAlterna'] . "</td>
-                                <td>" . $row['unidadEntrada'] . "</td>
-                                <td>" . $row['factorUnidades'] . "</td>
-                                <td>" . $row['unidadSalida'] . "</td>
-                                <td>" . $row['codigoProveedor'] . "</td>
-                                <td>" . $row['marca'] . "</td>
-                                <td>" . $row['fabricante'] . "</td>
-                                <td>" . $row['numeroFabricante'] . "</td>
-                                <td>" . $row['claveUnidad'] . "</td>
-                                <td>" . $row['claveSat'] . "</td>
-                                <td>" . $row['estatus'] . "</td>
-                                <td>" . $row['conteo'] . "</td>
-                                <td><input type='checkbox' " . ($row['contado'] == 1 ? 'checked' : '') . "></td>
-                                <td><input type='checkbox' " . ($row['existe'] == 1 ? 'checked' : '') . "></td>
-                                <td><input type='checkbox' " . ($row['paraRevision'] == 1 ? 'checked' : '') . "></td>
-                                <td><input type='checkbox' " . ($row['paraReestructura'] == 1 ? 'checked' : '') . "></td>
-                                <td>" . $row['fechaMov'] . "</td>
-                            </tr>";
+                <td>" . $row['claveId'] . "</td>
+                <td>" . $row['descripcion'] . "</td>
+                <td>" . $row['linea'] . "</td>
+                <td>" . $row['existencias'] . "</td>
+                <td>" . $row['controlAlmacen'] . "</td>
+                <td><input type='text' name='conteo[]' value='" . $row['conteo'] . "'></td>
+                <td><input type='checkbox' " . ($row['contado'] == 1 ? 'checked' : '') . "></td>
+                <td>" . $row['unidadEntrada'] . "</td>
+                <td>" . $row['factorUnidades'] . "</td>
+                <td>" . $row['unidadSalida'] . "</td>
+                <td>" . $row['claveAlterna'] . "</td>
+                <td>" . $row['codigoProveedor'] . "</td>
+                <td>" . $row['estatus'] . "</td>
+                <td>" . $row['fechaMov'] . "</td>
+                <td>" . $row['usuario'] . "</td>
+                <td><input type='checkbox' " . ($row['existe'] == 1 ? 'checked' : '') . "></td>
+             </tr>";
                         }
                     } else {
                         echo "<tr><td colspan='2'>No se encontraron resultados.</td></tr>";

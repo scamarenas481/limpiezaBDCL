@@ -1,10 +1,10 @@
-<nav class="navbar navbar-expand-lg fixed-top navbar-dark" style="background-color: #00008B  ;" data-bs-theme="dark" >
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark" style="background-color: #00008B;" data-bs-theme="dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="/limpiezaCL/limpiezaBDCL/app/vistas/menu.php">Inicio</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav" >
+        <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link <?php if ($currentPage === 'productos') echo 'active'; ?>" href="/limpiezaCL/limpiezaBDCL/app/vistas/productos.php">Inventario Inicial</a>
@@ -26,10 +26,13 @@
                 </li>
             </ul>
         </div>
-        <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
-            <button class="btn btn-buscar btn-outline-light" type="submit">Buscar</button>
-        </form>
+        <div class="d-flex">
+            <button class="btn btn-primary me-2" type="submit">Guardar</button>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
+                <button class="btn btn-buscar btn-outline-light" type="submit">Buscar</button>
+            </form>
+        </div>
     </div>
 </nav>
 
@@ -54,12 +57,13 @@
     .navbar-brand:focus {
         color: white;
     }
-  
+
     .navbar {
         color: #FFFFFF;
     }
+
     .navbar-brand {
-    color: #FFFFFF;
+        color: #FFFFFF;
     }
 
     .navbar-nav .nav-link.active {

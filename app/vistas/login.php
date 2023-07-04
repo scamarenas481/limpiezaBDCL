@@ -19,7 +19,6 @@ if (isset($_SESSION['last_activity']) && time() - $_SESSION['last_activity'] > 9
 }
 $_SESSION['last_activity'] = time();
 
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -34,7 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (password_verify($password, $hashedPassword)) {
         // Las credenciales son válidas, el usuario puede iniciar sesión
         $_SESSION['usuario'] = $username;
-        $_SESSION['id_usuario'] = $idUsuario; // Por ejemplo, el ID del usuario obtenido de la base de datos
+        $_SESSION['id_usuario'] = $usuarioDAO->getIdUsuario($username); // Obtener el ID del usuario
+        
         // Reiniciar el tiempo de actividad de la sesión
         $_SESSION['last_activity'] = time();
         header('Location: /limpiezaCL/limpiezaBDCL/app/vistas/menu.php');
@@ -76,6 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <button class="w-100 btn btn-lg btn-primary" type="submit">Iniciar sesión</button>
         </form>
     </main>
+
     <!-- Enlace al archivo JavaScript de Bootstrap (opcional) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

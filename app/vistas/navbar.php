@@ -27,7 +27,7 @@
             </ul>
         </div>
         <div class="d-flex">
-            <button class="btn btn-primary me-2" type="submit">Guardar</button>
+            
             <form class="d-flex">
                 <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
                 <button class="btn btn-buscar btn-outline-light" type="submit">Buscar</button>

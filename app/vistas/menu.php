@@ -1,11 +1,14 @@
 <?php
 session_start();
-
-if (!isset($_SESSION['usuario'])) {
-    // Si no hay una sesión activa, redirigir a login.php
+// Verificar si el usuario ha iniciado sesión
+if (!isset($_SESSION['usuario']) || !isset($_SESSION['id_usuario'])) {
+    // Si no ha iniciado sesión, redirigir al inicio de sesión
     header('Location: /limpiezaCL/limpiezaBDCL/app/vistas/login.php');
     exit();
 }
+
+$usuario = $_SESSION['usuario'];
+$idUsuario = $_SESSION['id_usuario'];
 ?>
 
 <!DOCTYPE html>
@@ -47,6 +50,8 @@ if (!isset($_SESSION['usuario'])) {
     </style>
 </head>
 <body>
+<!--<h1>Bienvenido, <?php echo $usuario; ?></h1>
+    <p>ID de sesión: <?php echo $idUsuario; ?></p>--->
     <div class="container">
         <img class="logoMenu" src="/../limpiezaCL/limpiezaBDCL/app/recursos/images/naranja1.png" alt="Logo">
         

@@ -5,6 +5,18 @@ class UsuarioDAO {
     public function __construct($conn) {
         $this->conn = $conn;
     }
+    public function getIdUsuario($username) {
+        $id ='';
+        $query = "SELECT id FROM usuarios WHERE Usuario = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $stmt->bind_result($id);
+        $stmt->fetch();
+        $stmt->close();
+
+        return $id;
+    }
 
     public function getHashedPassword($username) {
         $hashedPassword = '';

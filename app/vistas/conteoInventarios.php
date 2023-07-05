@@ -72,11 +72,13 @@ $idUsuario = $_SESSION['id_usuario'];
                         <?php
                         // Consulta para obtener los datos de la tabla productos
                         $consulta = "SELECT p.claveId, p.descripcion, p.linea, p.unidadEntrada, p.unidadSalida,\n"
-                            . "p.codigoProveedor, p.claveAlterna, p.controlAlmacen,\n"
-                            . "p.estatus, p.existencias, p.factorUnidades, p.conteo, p.contado, p.existe,\n"
-                            . "p.fechaMov, u.Usuario AS usuario\n"
-                            . "FROM productos p\n"
-                            . "INNER JOIN usuarios u ON p.IdUsuario = u.id;";
+    . "p.codigoProveedor, p.claveAlterna, p.controlAlmacen,\n"
+    . "p.estatus, p.existencias, p.factorUnidades, p.conteo, p.contado, p.existe,\n"
+    . "p.fechaMov, u.Usuario AS usuario\n"
+    . "FROM productos p\n"
+    . "INNER JOIN usuarios u ON p.IdUsuario = u.id\n"
+    . "WHERE p.contado = 0;";
+
 
                         // Ejecuta la consulta
                         $resultado = $conn->query($consulta);
@@ -91,13 +93,13 @@ $idUsuario = $_SESSION['id_usuario'];
                                     <td>" . $row['existencias'] . "</td>
                                     <td>" . $row['controlAlmacen'] . "</td>
                                     <td>
-    <input type='text' name='conteo[]' value='" . $row['conteo'] . "'>
+    <input type='text' class= 'conteo-input' name='conteo[]' value='" . $row['conteo'] . "'>
     <input type='hidden' name='claveId[]' value='" . $row['claveId'] . "'>
     <input type='hidden' name='existe[]' value='" . $row['existe'] . "'>
     <input type='hidden' name='contado[]' value='" . $row['contado'] . "'>
 </td>
 <td>
-    <input type='checkbox' name='contado_checkbox[]' " . ($row['contado'] == 1 ? 'checked' : '') . " value='" . $row['claveId'] . "'>
+    <input type='checkbox' class='contado-chekbox' name='contado_checkbox[]' " . ($row['contado'] == 1 ? 'checked' : '') . " value='" . $row['claveId'] . "'>
 </td>
 <td>" . $row['unidadEntrada'] . "</td>
                                     <td>" . $row['factorUnidades'] . "</td>
@@ -108,7 +110,7 @@ $idUsuario = $_SESSION['id_usuario'];
                                     <td>" . $row['fechaMov'] . "</td>
                                     <td>" . $row['usuario'] . "</td>
                                     <td>
-                                    <input type='checkbox' name='existe_checkbox[]' " . ($row['existe'] == 1 ? 'checked' : '') . " value='" . $row['claveId'] . "'>
+                                    <input type='checkbox' class = 'existe-chekbox' name='existe_checkbox[]' " . ($row['existe'] == 1 ? 'checked' : '') . " value='" . $row['claveId'] . "'>
                                 </td>                                    </tr>";
                             }
                         } else {
@@ -125,6 +127,55 @@ $idUsuario = $_SESSION['id_usuario'];
 
     <!-- Enlace al archivo JavaScript de Bootstrap (opcional) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Enlace al archivo JavaScript de Bootstrap (opcional) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+   
+
+    // Obtener todos los campos de entrada de texto para el campo "conteo"
+    const conteoInputs = document.querySelectorAll('.conteo-input');
+
+    conteoInputs.forEach(function(input) {
+        input.addEventListener('input', function() {
+            // Obtener el contenedor del registro actual que contiene todos los campos relacionados
+            const registroContainer = input.parentNode.parentNode;
+
+            // Obtener el campo "contado" asociado al campo de entrada de texto actual dentro del mismo registro
+            const contadoCheckbox = registroContainer.querySelector('.contado-chekbox');
+
+            
+            // Marcar automáticamente el campo "contado" cuando se escribe algo en el campo de entrada de texto
+            contadoCheckbox.checked = true;
+
+            // Obtener el campo "existe" asociado al campo de entrada de texto actual dentro del mismo registro
+            const existeCheckbox = registroContainer.querySelector('.existe-chekbox');
+
+            // Marcar automáticamente el campo "existe" cuando se escribe algo en el campo de entrada de texto
+            existeCheckbox.checked = true;
+        });
+    });
+</script>
+<script>
+   
+
+    // Obtener todos los campos de entrada de texto para el campo "conteo"
+    const contadoCheckbox = document.querySelectorAll('.contado-chekbox');
+
+    contadoCheckbox.forEach(function(input) {
+        input.addEventListener('input', function() {
+            // Obtener el contenedor del registro actual que contiene todos los campos relacionados
+            const registroContainer = input.parentNode.parentNode;
+
+
+            // Obtener el campo "existe" asociado al campo de entrada de texto actual dentro del mismo registro
+            const existeCheckbox = registroContainer.querySelector('.existe-chekbox');
+
+            // Marcar automáticamente el campo "existe" cuando se escribe algo en el campo de entrada de texto
+            existeCheckbox.checked = true;
+        });
+    });
+</script>
 </body>
 
 </html>
